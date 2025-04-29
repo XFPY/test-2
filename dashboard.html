@@ -110,36 +110,17 @@
   <i class="fas fa-bars" id="menu-icon"></i>
 </div>
 
-<!-- Sidebar -->
-<nav class="sidebar" id="sidebar">
+<div class="sidebar" id="sidebar">
   <div class="text-center mb-4">
-    <a href="dashboard-admin.html">
+    <a href="dashboard.html">
       <img src="img/pln icon plus.png" alt="QC AMI" width="110" height="50">
     </a>
   </div>
-  <ul class="nav flex-column">
-    <li>
-      <a class="nav-link" href="dashboard.html">
-        <i class="bi bi-speedometer2"></i> Dashboard
-      </a>
-    </li>
-    <li>
-      <a class="nav-link" href="Form_QC_Ami.html">
-        <i class="fas fa-file-alt"></i> Form QC AMI
-      </a>
-    </li>
-    <li>
-      <a class="nav-link" href="Data_QC_Ami.html">
-        <i class="fas fa-database"></i> Data QC AMI
-      </a>
-    </li>
-    <li>
-      <a class="nav-link" href="#" id="logoutButton">
-        <i class="bi bi-box-arrow-left"></i> Log Out
-      </a>
-    </li>
-  </ul>
-</nav>
+  <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+  <a class="nav-link" href="Form_QC_Ami.html"><i class="fas fa-file-alt"></i> Form QC AMI</a>
+  <a class="nav-link" href="Data_QC_Ami.html"><i class="fas fa-database"></i> Data QC AMI</a>
+  <a class="nav-link" href="#" id="logoutButton"><i class="bi bi-box-arrow-left"></i> Log Out</a>
+</div>
 
 <!-- Main Content -->
  <br>
@@ -189,6 +170,11 @@
       menuIcon.classList.remove('fa-times');
     }
   });
+</script>
+
+</body>
+</html>
+```
 
   document.addEventListener("DOMContentLoaded", function () {
     const loggedInUser = sessionStorage.getItem("loggedInUser");
