@@ -2,324 +2,309 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form QC AMI</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <style>
-        /* Hilangkan scrollbar */
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form QC AMI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #4e73df;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            left: 0;
-            top: 0;
-        }
+    .wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
 
-        .sidebar .nav-link {
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 10px;
-        }
+    .sidebar {
+      width: 250px;
+      background-color: #4e73df;
+      color: white;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 1000;
+      padding-top: 1rem;
+      transition: transform 0.3s ease;
+    }
 
-        .sidebar .nav-link:hover {
-            background-color: #2c5bd4;
-        }
+    .sidebar .nav-link {
+      color: white;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
 
-        /* Container utama */
-        .main-content {
-            margin-left: 250px;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-            background: #f0f2f5;
-        }
+    .sidebar .nav-link i {
+      margin-right: 10px;
+    }
 
-        /* Form Card */
-        .form-card {
-            background-color: #fff;
-            border-radius: 12px;
-            padding: 20px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+    .sidebar .nav-link:hover {
+      background-color: #2c5bd4;
+    }
 
-        /* Input Form */
-        .form-card input,
-        .form-card select,
-        .form-card textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      color: #4e73df;
+      background: white;
+      border: 1px solid #4e73df;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      z-index: 1100;
+    }
 
-        /* Button */
-        .form-card button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      background: #f0f2f5;
+      transition: margin-left 0.3s ease;
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-            }
-            .main-content {
-                margin-left: 200px;
-            }
-        }
-    </style>
+    .form-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-card input,
+    .form-card select,
+    .form-card textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .form-card button {
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.show {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+  </style>
 </head>
 
 <body>
+    <button id="menu-toggle" class="menu-toggle">
+        <i class="fas fa-bars" id="menu-icon"></i>
+      </button>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar-menu"> "><div class="w-100 text-center">
-        <img src="" alt="QC AMI" width="110" height="50" class="mb-3 mt-2">
+  <div class="sidebar" id="sidebar-menu">
+    <div class="text-center">
+      <img src="pln icon plus.png" alt="QC AMI" width="110" height="50" class="mb-3 mt-2" />
     </div>
     <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
     <a class="nav-link" href="Form_QC_Ami.html"><i class="fas fa-file-alt"></i> Form QC AMI</a>
     <a class="nav-link" href="Data_QC_Ami.html"><i class="fas fa-database"></i> Data QC AMI</a>
-    <a href="#" id="logoutButton" class="nav-link">
-    <i class="bi bi-box-arrow-left"></i> Log Out</a>
-</div>
+    <a href="#" id="logoutButton" class="nav-link"><i class="bi bi-box-arrow-left"></i> Log Out</a>
+  </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="form-card">
-          <h2 class="text-center">Form QC AMI</h2>
-          <form id="dataForm">
-            <div class="mb-3">
-              <label class="form-label">Project</label>
-              <input type="text" class="form-control" id="project" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nama</label>
-              <input type="text" class="form-control" id="nama" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Ring</label>
-              <select class="form-control" id="ring" required>
-                <option value="">Loading Ring...</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Suspension</label>
-              <input type="text" class="form-control" id="suspend" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Deadend</label>
-              <input type="text" class="form-control" id="deadend" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Cordinat</label>
-              <input type="text" class="form-control" id="cordinat" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Keterangan</label>
-              <textarea class="form-control" id="keterangan" rows="1"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <i class="bi bi-archive-fill"></i> <span class="ms-2">Simpan</span>
-            </button>
-          </form>
+  <div class="main-content">
+    <div class="form-card">
+      <h2 class="text-center">Form QC AMI</h2>
+      <form id="dataForm">
+        <div class="mb-3">
+          <label class="form-label">Project</label>
+          <input type="text" class="form-control" id="project" required />
         </div>
+        <div class="mb-3">
+          <label class="form-label">Nama</label>
+          <input type="text" class="form-control" id="nama" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ring</label>
+          <select class="form-control" id="ring" required>
+            <option value="">Loading Ring...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Suspension</label>
+          <input type="text" class="form-control" id="suspend" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Deadend</label>
+          <input type="text" class="form-control" id="deadend" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cordinat</label>
+          <input type="text" class="form-control" id="cordinat" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Keterangan</label>
+          <textarea class="form-control" id="keterangan" rows="1"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-archive-fill"></i> <span class="ms-2">Simpan</span>
+        </button>
+      </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {    
+  </div>
 
-            fetch("https://script.google.com/macros/s/AKfycby8XZW18p3ahyPzNOvLjN9hasVsCqpF8fsR2VhHcN925SEhpOLOH0HYP7Os9S5fd0mh/exec")
-                .then(response => response.json())
-                .then(data => {
-                    const ringDropdown = document.getElementById("ring");
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById('menu-toggle').addEventListener('click', function () {
+      const sidebar = document.getElementById('sidebar-menu');
+      const menuIcon = document.getElementById('menu-icon');
 
-                    ringDropdown.innerHTML = '<option value="">Pilih Ring</option>';
+      sidebar.classList.toggle('show');
 
-                    // Mengisi dropdown Ring
-                    data.ring.forEach(ring => {
-                        let option = document.createElement("option");
-                        option.value = ring;
-                        option.textContent = ring;
-                        ringDropdown.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Error:", error));
+      // Ganti icon
+      if (sidebar.classList.contains('show')) {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-times');
+      } else {
+        menuIcon.classList.remove('fa-times');
+        menuIcon.classList.add('fa-bars');
+      }
+    });
+
+    // Dropdown Ring Fetch
+    fetch("https://script.google.com/macros/s/AKfycby8XZW18p3ahyPzNOvLjN9hasVsCqpF8fsR2VhHcN925SEhpOLOH0HYP7Os9S5fd0mh/exec")
+      .then(res => res.json())
+      .then(data => {
+        const ringDropdown = document.getElementById("ring");
+        ringDropdown.innerHTML = '<option value="">Pilih Ring</option>';
+        data.ring.forEach(ring => {
+          let option = document.createElement("option");
+          option.value = ring;
+          option.textContent = ring;
+          ringDropdown.appendChild(option);
         });
+      });
 
-        // Fungsi untuk menangani pengiriman form
-        document.getElementById("dataForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            
-            Swal.fire({
-                title: "Menyimpan data...",
-                text: "Harap tunggu sebentar.",
-                icon: "info",
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-            
-            let formData = {
-                project: document.getElementById('project').value,
-                nama: document.getElementById('nama').value,
-                ring: document.getElementById('ring').value,
-                suspend: document.getElementById('suspend').value,
-                deadend: document.getElementById('deadend').value,
-                cordinat: document.getElementById('cordinat').value,
-                keterangan: document.getElementById('keterangan').value.trim()
-            };
-            
-            fetch("https://script.google.com/macros/s/AKfycbzYIESOZKZRU8adfRtHSqsP9EYpa4-RVz04AFfmrZVSxnGzQWv2lkn_lWCXKqxI3OK0/exec", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                mode: 'no-cors',
-                body: JSON.stringify(formData)
-            }).then(() => {
-                Swal.fire("Sukses!", "Data berhasil disimpan.", "success");
-                document.getElementById("dataForm").reset();
-            }).catch(() => {
-                Swal.fire("Gagal!", "Terjadi kesalahan saat menyimpan data.", "error");
-            });
-        });
+    // Form Submit
+    document.getElementById("dataForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      Swal.fire({
+        title: "Menyimpan data...",
+        text: "Harap tunggu sebentar.",
+        icon: "info",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading()
+      });
 
-        // Fitur sidebar untuk admin dan user
-        document.addEventListener("DOMContentLoaded", function () {
-    // Ambil role pengguna dari sessionStorage
-    const role = sessionStorage.getItem("loggedInUserRole") || "";
+      let formData = {
+        project: document.getElementById('project').value,
+        nama: document.getElementById('nama').value,
+        ring: document.getElementById('ring').value,
+        suspend: document.getElementById('suspend').value,
+        deadend: document.getElementById('deadend').value,
+        cordinat: document.getElementById('cordinat').value,
+        keterangan: document.getElementById('keterangan').value.trim()
+      };
 
-    // Ambil elemen sidebar
-    const sidebar = document.getElementById("sidebar-menu");
+      fetch("https://script.google.com/macros/s/AKfycbzYIESOZKZRU8adfRtHSqsP9EYpa4-RVz04AFfmrZVSxnGzQWv2lkn_lWCXKqxI3OK0/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: 'no-cors',
+        body: JSON.stringify(formData)
+      }).then(() => {
+        Swal.fire("Sukses!", "Data berhasil disimpan.", "success");
+        document.getElementById("dataForm").reset();
+      }).catch(() => {
+        Swal.fire("Gagal!", "Terjadi kesalahan saat menyimpan data.", "error");
+      });
+    });
 
-    // Daftar menu umum (untuk semua pengguna)
-    const commonMenu = `
+    // Role & Sidebar Management
+    document.addEventListener("DOMContentLoaded", function () {
+      const role = sessionStorage.getItem("loggedInUserRole") || "";
+      const sidebar = document.getElementById("sidebar-menu");
+
+      const commonMenu = `
         <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
         <a class="nav-link" href="Form_QC_Ami.html"><i class="fas fa-file-alt"></i> Form QC AMI</a>
         <a class="nav-link" href="Data_QC_Ami.html"><i class="fas fa-database"></i> Data QC AMI</a>
-    `;
+      `;
 
-    // Daftar menu admin
-    const adminMenu = `
+      const adminMenu = `
         <a class="nav-link" href="manage-users.html"><i class="fas fa-users"></i> Kelola Pengguna</a>
         <a class="nav-link" href="tambah-akun.html"><i class="fas fa-user-plus"></i> Tambah Akun</a>
-    `;
+      `;
 
-    // Tombol logout
-    const logoutButton = `
+      const logoutButton = `
         <a href="#" id="logoutButton" class="nav-link"><i class="bi bi-box-arrow-left"></i> Log Out</a>
-    `;
+      `;
 
-    // Gambar khusus untuk admin
-    const adminImage = `
+      const adminImage = `
         <div class="w-100 text-center">
-            <a href="dashboard-admin.html"><img src="img/pln icon plus.png" alt="QC AMI" width="110" height="50" class="mb-3 mt-2"></a>
+          <a href="dashboard-admin.html"><img src="pln icon plus.png" alt="QC AMI" width="110" height="50" class="mb-3 mt-2"></a>
         </div>
-    `;
+      `;
 
-    // Memperbarui konten sidebar berdasarkan role
-    if (role.toLowerCase() === "admin") {
-        // Untuk admin, tambahkan gambar khusus di bagian atas
+      if (role.toLowerCase() === "admin") {
         sidebar.innerHTML = adminImage + commonMenu + adminMenu + logoutButton;
-    } else {
-        // Untuk user biasa, tampilkan menu umum saja
+      } else {
         sidebar.innerHTML = commonMenu + logoutButton;
-    }
+      }
 
-    // Fitur Log Out dengan Pengecekan Elemen
-    let logoutButtonElement = document.getElementById("logoutButton");
-    if (logoutButtonElement) {
-        logoutButtonElement.addEventListener("click", function (event) {
-            event.preventDefault(); // Mencegah redirect langsung
-            Swal.fire({
-                title: "Anda Yakin Ingin Log Out?",
-                text: "Anda Akan Keluar Dari Akun Anda.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Ya, Log Out",
-                cancelButtonText: "Batal"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Hapus sesi login
-                    sessionStorage.removeItem("loggedInUser");
-                    sessionStorage.removeItem("loggedInUserRole");
-                    // Tampilkan notifikasi sukses
-                    Swal.fire({
-                        toast: true,
-                        position: "top-end",
-                        icon: "success",
-                        title: "Logout berhasil!",
-                        showConfirmButton: false,
-                        timer: 2500,
-                        timerProgressBar: true
-                    });
-                    // Redirect setelah notifikasi selesai
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 2500);
-                }
-            });
+      // Logout handler
+      document.getElementById("logoutButton").addEventListener("click", function (event) {
+        event.preventDefault();
+        Swal.fire({
+          title: "Konfirmasi",
+          text: "Yakin ingin log out?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Ya, log out",
+          cancelButtonText: "Batal"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            sessionStorage.removeItem("loggedInUserRole");
+            sessionStorage.removeItem("loggedInUserName");
+            window.location.href = "login.html";
+          }
         });
-    } else {
-        console.warn("Elemen #logoutButton tidak ditemukan!");
-    }
-});
-        </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const loggedInUserRole = sessionStorage.getItem("loggedInUserRole");
-        if (!loggedInUserRole) {
-            window.location.href = "index.html";
-        }
-
-        const dashboardLink = document.querySelector('.sidebar .nav-link[href="dashboard.html"]');
-        if (dashboardLink) {
-            dashboardLink.addEventListener("click", function (event) {
-                event.preventDefault();
-                if (loggedInUserRole.toLowerCase() === "admin") {
-                    window.location.href = "dashboard-admin.html";
-                } else {
-                    window.location.href = "dashboard.html";
-                }
-            });
-        }
+      });
     });
-</script>
-</script>
+  </script>
 </body>
-
 </html>
