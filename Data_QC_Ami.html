@@ -169,6 +169,9 @@
           <h2 class="text-center mb-0">Filter Data QC AMI</h2>
         </div>
         <div class="card-body">
+          <div class="col-sm-12 col-md-5 mb-2">
+            <input type="text" id="filterProject" class="form-control" placeholder="Cari Project">
+          </div>
           <div class="row mb-4">
             <div class="col-sm-12 col-md-5 mb-2">
               <input type="text" id="filterNama" class="form-control" placeholder="Cari Nama">
@@ -200,7 +203,7 @@
               </thead>
               <tbody id="dataTable">
                 <tr>
-                  <td colspan="9" class="text-center">Data belum dimuat...</td>
+                  <td colspan="9" class="text-center">Data Sedang Dimuat...</td>
                 </tr>
               </tbody>
             </table>
@@ -244,7 +247,7 @@
         })
         .catch(error => {
           console.error("Error:", error);
-          document.getElementById("dataTable").innerHTML = `<tr><td colspan="9" class="text-center text-danger">Gagal memuat data</td></tr>`;
+          document.getElementById("dataTable").innerHTML = `<tr><td colspan="9" class="text-center text-danger">Gagal Memuat Data</td></tr>`;
         });
     }
 
@@ -275,21 +278,19 @@
     }
 
     function filterData() {
-      const filterNama = document.getElementById("filterNama").value.toLowerCase();
-      const filterRing = document.getElementById("filterRing").value.toLowerCase();
+  const filterProject = document.getElementById("filterProject").value.toLowerCase();
+  const filterNama = document.getElementById("filterNama").value.toLowerCase();
+  const filterRing = document.getElementById("filterRing").value.toLowerCase();
 
-      if (filterNama === "" && filterRing === "") {
-        displayData(allData);
-        return;
-      }
+  const filteredData = allData.filter(row => {
+    const projectMatch =!filterProject || (row.project && row.project.toLowerCase().includes(filterProject));
+    const namaMatch = !filterNama || (row.nama && row.nama.toLowerCase().includes(filterNama));
+    const ringMatch = !filterRing || (row.ring && row.ring.toLowerCase().includes(filterRing));
+    return namaMatch && ringMatch && projectMatch;
+  });
 
-      const filteredData = allData.filter(row =>
-        (row.nama && row.nama.toLowerCase().includes(filterNama)) &&
-        (row.ring && row.ring.toLowerCase().includes(filterRing))
-      );
-
-      displayData(filteredData);
-    }
+  displayData(filteredData);
+}
 
     document.addEventListener("DOMContentLoaded", () => {
       loadData();
