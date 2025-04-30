@@ -191,11 +191,11 @@
                   <th>Project</th>
                   <th>Nama</th>
                   <th>Ring</th>
-                  <th>Suspend</th>
+                  <th>Suspension</th>
                   <th>Deadend</th>
-                  <th>Kordinat</th>
+                  <th>Cordinat</th>
                   <th>Keterangan</th>
-                  <th>Waktu</th>
+                  <th>Date</th>
                 </tr>
               </thead>
               <tbody id="dataTable">
@@ -228,7 +228,7 @@
       }
     });
 
-    const sheetUrl = "https://script.google.com/macros/s/AKfycby0bZAeJRkPH6H_08cIDik3330FAJrBmFqp81BsMFCQXtcgb4shqogOwl2tQMulFGsj/exec";
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbylGDaKnzBuDV2WZ48OOKAwYMUlLmeDJ-NAFsfmiBDu7sLDHboPk_5lw110CsxTKy96/exec";
     let allData = [];
 
     function loadData() {
@@ -268,7 +268,7 @@
           <td>${row.deadend || "-"}</td>
           <td>${row.cordinat || "-"}</td>
           <td>${row.keterangan || "-"}</td>
-          <td>${row.waktu || "-"}</td>
+          <td>${row.date || "-"}</td>
         `;
         tableBody.appendChild(tr);
       });
