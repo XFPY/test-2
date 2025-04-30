@@ -301,6 +301,43 @@
       }
     });
 
+    // Role & Sidebar Management
+    document.addEventListener("DOMContentLoaded", function () {
+      const role = sessionStorage.getItem("loggedInUserRole") || "";
+      const sidebar = document.getElementById("sidebar-menu");
+
+      const commonMenu = `
+        <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a class="nav-link" href="Form_QC_Ami.html"><i class="fas fa-file-alt"></i> Form QC AMI</a>
+        <a class="nav-link" href="Data_QC_Ami.html"><i class="fas fa-database"></i> Data QC AMI</a>
+      `;
+
+      const adminMenu = `
+        <a class="nav-link" href="manage-users.html"><i class="fas fa-users"></i> Kelola Pengguna</a>
+        <a class="nav-link" href="tambah-akun.html"><i class="fas fa-user-plus"></i> Tambah Akun</a>
+      `;
+
+      const logoutButton = `
+        <a href="#" id="logoutButton" class="nav-link"><i class="bi bi-box-arrow-left"></i> Log Out</a>
+      `;
+
+      const adminImage = `
+        <div class="w-100 text-center">
+          <a href="dashboard-admin.html"><img src="pln icon plus.png" alt="QC AMI" width="110" height="50" class="mb-3 mt-2"></a>
+        </div>
+      `;
+      const userImage = `
+        <div class="w-100 text-center">
+          <a href="dashboard.html"><img src="pln icon plus.png" alt="QC AMI" width="110" height="50" class="mb-3 mt-2"></a>
+        </div>
+      `;
+      if (role.toLowerCase() === "admin") {
+        sidebar.innerHTML = adminImage + commonMenu + adminMenu + logoutButton;
+      } else {
+        sidebar.innerHTML = userImage + commonMenu + logoutButton;
+      }
+    });
+
     document.getElementById("logoutButton").addEventListener("click", function (e) {
       e.preventDefault();
       Swal.fire({
