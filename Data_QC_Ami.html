@@ -164,51 +164,46 @@
   <!-- Main Content -->
   <div class="main-content">
     <div class="container">
-      <div class="card shadow-sm">
-        <div class="card-header">
-          <h2 class="text-center mb-0">Filter Data QC AMI</h2>
+      <div class="row mb-4">
+        <div class="col-sm-12 col-md-4 mb-2">
+          <select class="form-select" id="filterCategory">
+            <option value="" selected disabled>Pilih Kategori Filter</option>
+            <option value="project">Project</option>
+            <option value="nama">Nama</option>
+            <option value="ring">Ring</option>
+          </select>
         </div>
-        <div class="card-body">
-          <div class="col-sm-12 col-md-5 mb-2">
-            <input type="text" id="filterProject" class="form-control" placeholder="Cari Project">
-          </div>
-          <div class="row mb-4">
-            <div class="col-sm-12 col-md-5 mb-2">
-              <input type="text" id="filterNama" class="form-control" placeholder="Cari Nama">
-            </div>
-            <div class="col-sm-12 col-md-5 mb-2">
-              <input type="text" id="filterRing" class="form-control" placeholder="Cari Ring">
-            </div>
-            <div class="col-sm-12 col-md-2">
-              <button class="btn btn-primary w-100" onclick="filterData()">
-                <i class="bi bi-search"></i> <span class="ms-2">Cari</span>
-              </button>
-            </div>
-          </div>
+        <div class="col-sm-12 col-md-4 mb-2">
+          <input type="text" id="filterKeyword" class="form-control" placeholder="Masukkan kata kunci">
+        </div>
+        <div class="col-sm-12 col-md-2">
+          <button class="btn btn-primary w-100" onclick="filterData()">
+            <i class="bi bi-search"></i> <span class="ms-2">Cari</span>
+          </button>
+        </div>
+      </div>
 
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-              <thead class="table-dark">
-                <tr>
-                  <th>No</th>
-                  <th>Project</th>
-                  <th>Nama</th>
-                  <th>Ring</th>
-                  <th>Suspension</th>
-                  <th>Deadend</th>
-                  <th>Cordinat</th>
-                  <th>Keterangan</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody id="dataTable">
-                <tr>
-                  <td colspan="9" class="text-center">Data Sedang Dimuat...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>No</th>
+              <th>Project</th>
+              <th>Nama</th>
+              <th>Ring</th>
+              <th>Suspension</th>
+              <th>Deadend</th>
+              <th>Cordinat</th>
+              <th>Keterangan</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="dataTable">
+            <tr>
+              <td colspan="9" class="text-center">Data Sedang Dimuat...</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -256,7 +251,7 @@
       tableBody.innerHTML = "";
 
       if (data.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Tidak ada data</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Data Yang Anda Cari Tidak Ditemukan</td></tr>`;
         return;
       }
 
@@ -278,19 +273,20 @@
     }
 
     function filterData() {
-  const filterProject = document.getElementById("filterProject").value.toLowerCase();
-  const filterNama = document.getElementById("filterNama").value.toLowerCase();
-  const filterRing = document.getElementById("filterRing").value.toLowerCase();
+      const category = document.getElementById("filterCategory").value;
+      const keyword = document.getElementById("filterKeyword").value.trim().toLowerCase();
 
-  const filteredData = allData.filter(row => {
-    const projectMatch =!filterProject || (row.project && row.project.toLowerCase().includes(filterProject));
-    const namaMatch = !filterNama || (row.nama && row.nama.toLowerCase().includes(filterNama));
-    const ringMatch = !filterRing || (row.ring && row.ring.toLowerCase().includes(filterRing));
-    return namaMatch && ringMatch && projectMatch;
-  });
+      if (!category || !keyword) {
+        Swal.fire("Oops!", "Pilih kategori dan masukkan kata kunci dulu dong!", "warning");
+        return;
+      }
 
-  displayData(filteredData);
-}
+      const filteredData = allData.filter(row =>
+        row[category] && row[category].toLowerCase().includes(keyword)
+      );
+
+      displayData(filteredData);
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
       loadData();
@@ -300,7 +296,6 @@
         document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
       }
     });
-
     // Role & Sidebar Management
     document.addEventListener("DOMContentLoaded", function () {
       const role = sessionStorage.getItem("loggedInUserRole") || "";
@@ -337,23 +332,24 @@
         sidebar.innerHTML = userImage + commonMenu + logoutButton;
       }
     });
-
-    document.getElementById("logoutButton").addEventListener("click", function (e) {
-      e.preventDefault();
-      Swal.fire({
-        title: "Konfirmasi",
-        text: "Yakin ingin logout?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya, Logout",
-        cancelButtonText: "Batal"
-      }).then(result => {
-        if (result.isConfirmed) {
-          sessionStorage.clear();
-          window.location.href = "index.html";
-        }
+    // Logout handler
+    document.getElementById("logoutButton").addEventListener("click", function (event) {
+        event.preventDefault();
+        Swal.fire({
+          title: "Konfirmasi",
+          text: "Yakin ingin log out?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Ya, log out",
+          cancelButtonText: "Batal"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            sessionStorage.removeItem("loggedInUserRole");
+            sessionStorage.removeItem("loggedInUserName");
+            window.location.href = "index.html";
+          }
+        });
       });
-    });
   </script>
 </body>
 
