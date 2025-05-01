@@ -171,6 +171,7 @@
             <option value="project">Project</option>
             <option value="nama">Nama</option>
             <option value="ring">Ring</option>
+            <option value="all">Lihat Semua Data</option>
           </select>
         </div>
         <div class="col-sm-12 col-md-4 mb-2">
@@ -179,6 +180,13 @@
         <div class="col-sm-12 col-md-2">
           <button class="btn btn-primary w-100" onclick="filterData()">
             <i class="bi bi-search"></i> <span class="ms-2">Cari</span>
+          </button>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-sm-12 col-md-2">
+          <button class="btn btn-secondary w-100" onclick="resetData()">
+            <i class="bi bi-arrow-clockwise"></i> <span class="ms-2">Reset</span>
           </button>
         </div>
       </div>
@@ -272,6 +280,7 @@
       });
     }
 
+// filter data
     function filterData() {
       const category = document.getElementById("filterCategory").value;
       const keyword = document.getElementById("filterKeyword").value.trim().toLowerCase();
@@ -296,6 +305,12 @@
         document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
       }
     });
+
+    // reset filter data
+    function resetData() {
+  displayData(allData); // Tampilkan ulang semua data
+}
+
     // Role & Sidebar Management
     document.addEventListener("DOMContentLoaded", function () {
       const role = sessionStorage.getItem("loggedInUserRole") || "";
