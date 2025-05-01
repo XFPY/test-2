@@ -171,7 +171,6 @@
             <option value="project">Project</option>
             <option value="nama">Nama</option>
             <option value="ring">Ring</option>
-            <option value="all">Lihat Semua Data</option>
           </select>
         </div>
         <div class="col-sm-12 col-md-4 mb-2">
@@ -346,9 +345,9 @@
       } else {
         sidebar.innerHTML = userImage + commonMenu + logoutButton;
       }
-    });
-    // Logout handler
-    document.getElementById("logoutButton").addEventListener("click", function (event) {
+
+      // Logout handler
+      document.getElementById("logoutButton").addEventListener("click", function (event) {
         event.preventDefault();
         Swal.fire({
           title: "Konfirmasi",
@@ -365,6 +364,7 @@
           }
         });
       });
+    });
   </script>
 </body>
 
